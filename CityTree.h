@@ -32,8 +32,11 @@ public:
     void deleteByPos(int x,int y);
     void deleteByName(std::string name);
     void printByDepth(int depth);
+    void printRecursion(int depth,City* root);
     void findByName(std::string name);
+    void findByNameRecursion(std::string name,City* root);
     void findByPos(int x,int y);
+    void findByPosRecursion(int x,int y,City* root);
     void replaceRightestInLeft(City* root);
 };
 
