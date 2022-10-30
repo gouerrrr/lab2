@@ -28,7 +28,7 @@ void CityTree::add(int x, int y, std::string name) {
 }
 
 void CityTree::deleteByPos(int x, int y) {
-
+    deleteByPosRecursion(x,y,first);
 }
 
 
@@ -42,7 +42,7 @@ void CityTree::deleteByPos(int x, int y) {
 */
 void CityTree::deleteByName(std::string name) {
     City*p=first;
-    if (first->name==name){ replaceRightestInLeft(first);}
+    if (first->name==name){replaceRightestInLeft(first);}
     while (p->left->name!=name&&p->right->name!=name)
     {
         if(name >p->name){p=p->right;}
@@ -133,6 +133,49 @@ void CityTree::findByPosRecursion(int x, int y, City *root) {
     if(root->left){ findByPosRecursion(x,y,root->left);}
     if(root->right){ findByPosRecursion(x,y,root->right);}
 }
+
+void CityTree::deleteByPosRecursion(int x, int y, City *root) {
+    if(root->right){
+        if(root->right->x==x&&root->right->y==y){
+            if(root->right->right&&root->right->left){replaceRightestInLeft(root->right);}
+            else if(root->right->left){
+                City* wantToDelete=root->right;
+                root->right=root->right->left;
+                delete wantToDelete;
+            }
+            else if(root->right->right){
+                City* wantToDelete=root->right;
+                root->right=root->right->right;
+                delete wantToDelete;
+            }
+            else{delete root->right;root->right=NULL;}
+        }
+        else{
+            deleteByPosRecursion(x,y,root->right);
+        }
+    }
+    if(root->left){
+        if(root->left->x==x&&root->left->y==y){
+            if(root->left->right&&root->left->left){replaceRightestInLeft(root->left);}
+            else if(root->left->left){
+                City* wantToDelete=root->left;
+                root->left=root->left->left;
+                delete wantToDelete;
+            }
+            else if(root->left->right){
+                City* wantToDelete=root->left;
+                root->left=root->left->right;
+                delete wantToDelete;
+            }
+            else{delete root->left;root->left=NULL;}
+        }
+        else{
+            deleteByPosRecursion(x,y,root->left);
+        }
+
+    }
+}
+
 
 
 

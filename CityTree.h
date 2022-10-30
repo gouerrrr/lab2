@@ -30,6 +30,7 @@ public:
 
     void add(int x,int y,std::string name);
     void deleteByPos(int x,int y);
+    void deleteByPosRecursion(int x,int y,City * root);
     void deleteByName(std::string name);
     void printByDepth(int depth);
     void printRecursion(int depth,City* root);
