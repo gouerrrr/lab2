@@ -28,7 +28,12 @@ void CityTree::add(int x, int y, std::string name) {
 }
 
 void CityTree::deleteByPos(int x, int y) {
-    deleteByPosRecursion(x,y,first);
+    if(first->x==x&& first->y==y)
+    {
+        deleteByName(first->name);
+        return;
+    }
+    else { deleteByPosRecursion(x, y, first); }
 }
 
 
@@ -42,7 +47,12 @@ void CityTree::deleteByPos(int x, int y) {
 */
 void CityTree::deleteByName(std::string name) {
     City*p=first;
-    if (first->name==name){replaceRightestInLeft(first);}
+    if (first->name==name&&first->left){replaceRightestInLeft(first);
+        return;}
+    else if(first->name==name&&first->right){
+        replaceLeftestInRight(first);
+        return;
+    }
     while (p->left->name!=name&&p->right->name!=name)
     {
         if(name >p->name){p=p->right;}
@@ -135,9 +145,13 @@ void CityTree::findByPosRecursion(int x, int y, City *root) {
 }
 
 void CityTree::deleteByPosRecursion(int x, int y, City *root) {
+
+
+
     if(root->right){
         if(root->right->x==x&&root->right->y==y){
-            if(root->right->right&&root->right->left){replaceRightestInLeft(root->right);}
+            if(root->right->right&&root->right->left){replaceRightestInLeft(root->right);
+                return;}
             else if(root->right->left){
                 City* wantToDelete=root->right;
                 root->right=root->right->left;
@@ -156,7 +170,8 @@ void CityTree::deleteByPosRecursion(int x, int y, City *root) {
     }
     if(root->left){
         if(root->left->x==x&&root->left->y==y){
-            if(root->left->right&&root->left->left){replaceRightestInLeft(root->left);}
+            if(root->left->right&&root->left->left){replaceRightestInLeft(root->left);
+                return;}
             else if(root->left->left){
                 City* wantToDelete=root->left;
                 root->left=root->left->left;
@@ -174,6 +189,17 @@ void CityTree::deleteByPosRecursion(int x, int y, City *root) {
         }
 
     }
+}
+
+void CityTree::replaceLeftestInRight(City *root) {
+    City* temp=root->right;
+    while(temp->left->left){temp=temp->left;}
+    root->name=temp->left->name;
+    root->x=temp->left->x;
+    root->y=temp->left->y;
+    City * wantToDelete=temp->left;
+    temp->left=temp->left->right;
+    delete wantToDelete;
 }
 
 

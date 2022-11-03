@@ -11,9 +11,13 @@ int main() {
     cityTree.deleteByName("London");
     std::cout<<"----------------------------------------------"<<std::endl;
     cityTree.printByDepth(4);
-    cityTree.deleteByPos(116,39);
+    cityTree.deleteByPos(112,22);
     std::cout<<"----------------------------------------------"<<std::endl;
     cityTree.printByDepth(4);
+    std::cout<<"----------------------------------------------"<<std::endl;
+    cityTree.findByName("石家庄");
+    std::cout<<"----------------------------------------------"<<std::endl;
+    cityTree.findByPos(116,39);
 
     return 0;
 }
